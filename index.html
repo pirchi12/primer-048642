@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<!--
+  primer skill, v3 · audience: Menahem Pirchi + Meir Nissim Cohen (Newcom).
+  Subject: Yehoshua Pirchi. Same spine as v2 (four conclusion lanes + closing chapter), polished.
+  Self-contained, offline, emailable. Browser-history back/forward via pushState; hash routing.
+  All Hebrew quotes byte-exact from data/whatsapp/meir-fresh-2026-05-29/_chat.txt and
+  data/whatsapp/meir-media/WhatsApp Chat with מאיר ביטוח.txt as cited.
+  ת"ז never transcribed (project privacy rule); appears only on the source image.
+  No em-dashes; ASCII punctuation only for separators.
+-->
+<html lang="he" dir="rtl">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תיק יהושע פרחי. ארבע מסקנות ופרק סיום.</title>
+<style>
+  :root{
+    /* base palette: warm editorial */
+    --ink:#0e1620; --ink-soft:#374553; --soft:#5b6b76; --faint:#8a99a3;
+    --bg:#fbfaf6; --panel:#ffffff; --line:#e8e3d6; --line-soft:#f1ecdf;
+    /* accents */
+    --c1:#b8390a; --c1-soft:#fff1e8; --c1-line:#f4d6c0;
+    --c2:#2d4a7c; --c2-soft:#eef2fa; --c2-line:#cbd6ea;
+    --c3:#2f7d5b; --c3-soft:#eef7f2; --c3-line:#c9e2d4;
+    --c4:#8c2a1a; --c4-soft:#fbeae6; --c4-line:#ecc6bd;
+    /* closing chapter: deep navy with cream */
+    --close-bg:#0d1828; --close-bg2:#1a2a44; --close-bg3:#243456;
+    --close-ink:#f3ede0; --close-soft:#c7c9d4; --close-faint:#8a8fa3;
+    --close-accent:#d4a85b; --close-accent-soft:#e9c887;
+    /* status */
+    --warn:#a35008; --warn-soft:#fff4e9; --warn-line:#f0d3b6;
+    --good:#1f6f54; --good-soft:#ecf7f1; --good-line:#bfe3d2;
+    --red:#8c2a17; --red-soft:#fbeae6; --red-line:#ecc6bd;
+    --teach:#2d4a73; --teach-soft:#eef2f8; --teach-line:#c7d3e3;
+    /* spacing scale */
+    --col:920px;
+    --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px;
+    --sh-1:0 1px 2px rgba(15,26,44,.04), 0 1px 1px rgba(15,26,44,.02);
+    --sh-2:0 4px 14px rgba(15,26,44,.06), 0 1px 2px rgba(15,26,44,.04);
+    --sh-3:0 12px 32px rgba(15,26,44,.08), 0 4px 8px rgba(15,26,44,.04);
+    --sh-glow:0 0 0 3px rgba(184,57,10,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth; font-size:16px}
+  body{background:var(--bg); color:var(--ink); font-family:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue","Arial Hebrew",Arial,sans-serif; line-height:1.72; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility}
+
+  /* sticky navbar */
+  .navbar{position:sticky; top:0; z-index:50; background:rgba(251,250,246,0.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line); padding:9px 18px; display:flex; gap:8px; align-items:center}
+  .navbar button, .navbar a.home{font-size:13px; font-weight:600; padding:7px 14px; border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--ink); cursor:pointer; text-decoration:none; font-family:inherit; transition:.14s; letter-spacing:.01em}
+  .navbar button:hover, .navbar a.home:hover{background:var(--c1-soft); border-color:var(--c1); box-shadow:var(--sh-1)}
+  .navbar button:disabled{opacity:.32; cursor:not-allowed; background:var(--panel)}
+  .navbar .spacer{flex:1}
+  .navbar .crumbs{font-size:12.5px; color:var(--soft); padding:0 10px; max-width:380px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .navbar .crumbs b{color:var(--ink); font-weight:700}
+
+  .wrap{max-width:var(--col); margin:0 auto; padding:46px 26px 140px}
+
+  /* hero */
+  .hero{margin:0 0 26px}
+  .eyebrow{text-transform:uppercase; letter-spacing:.16em; font-size:11.5px; font-weight:700; color:var(--c1); margin-bottom:18px}
+  h1{font-size:clamp(28px,5.4vw,46px); line-height:1.1; font-weight:800; letter-spacing:-.014em; margin-bottom:14px; color:var(--ink)}
+  .lead{font-size:18.5px; line-height:1.55; color:var(--ink); font-weight:600; margin-bottom:14px; max-width:680px}
+  .sub{font-size:16px; color:var(--ink-soft); line-height:1.65; max-width:680px}
+  .sub b{color:var(--ink); font-weight:700}
+
+  .howto{background:var(--teach-soft); border:1px solid var(--teach-line); border-radius:var(--r-md); padding:15px 19px; margin:24px 0 30px; font-size:13.5px; color:var(--teach); line-height:1.7}
+  .howto b{font-weight:800; color:var(--ink)}
+  .howto ul{margin:7px 0 0; padding-inline-start:22px} .howto li{margin:4px 0}
+
+  /* navigation map: 4 conclusion cards + visual gap + closer card */
+  .map{display:grid; grid-template-columns:repeat(4, 1fr) 16px 1.2fr; gap:10px; margin:0 0 42px}
+  .map-card{display:flex; flex-direction:column; gap:6px; padding:14px 13px; border-radius:var(--r-md); text-decoration:none; color:var(--ink); border:1px solid var(--line); background:var(--panel); box-shadow:var(--sh-1); transition:.18s; min-height:94px; align-items:flex-start}
+  .map-card:hover{transform:translateY(-2px); box-shadow:var(--sh-2)}
+  .map-card .map-num{font-size:24px; font-weight:800; line-height:1; opacity:.92}
+  .map-card .map-text{font-size:12.5px; font-weight:700; color:var(--ink-soft); line-height:1.4}
+  .map-card .map-sub{font-size:11px; font-weight:600; color:var(--soft); line-height:1.35; letter-spacing:.01em; margin-top:auto}
+  .map-card.mc1{border-inline-start:3px solid var(--c1)} .map-card.mc1 .map-num{color:var(--c1)}
+  .map-card.mc2{border-inline-start:3px solid var(--c2)} .map-card.mc2 .map-num{color:var(--c2)}
+  .map-card.mc3{border-inline-start:3px solid var(--c3)} .map-card.mc3 .map-num{color:var(--c3)}
+  .map-card.mc4{border-inline-start:3px solid var(--c4)} .map-card.mc4 .map-num{color:var(--c4)}
+  .map-sep{display:block; align-self:stretch}
+  .map-card.mcclose{border:1px solid rgba(212,168,91,0.35); background:linear-gradient(135deg, var(--close-bg) 0%, var(--close-bg2) 100%); color:var(--close-ink); box-shadow:0 6px 20px rgba(15,26,44,0.18)}
+  .map-card.mcclose:hover{box-shadow:0 10px 26px rgba(15,26,44,0.24)}
+  .map-card.mcclose .map-num{color:var(--close-accent); font-size:22px}
+  .map-card.mcclose .map-text{color:var(--close-ink); font-weight:800}
+  .map-card.mcclose .map-sub{color:var(--close-soft); font-weight:500}
+  @media(max-width:760px){.map{grid-template-columns:repeat(2, 1fr); gap:10px} .map-sep{display:none}}
+
+  /* glossary hover tooltip */
+  .gloss{border-bottom:1px dotted var(--c1); cursor:help; background:var(--c1-soft); padding:0 3px; border-radius:3px; color:var(--ink)}
+  .gloss:focus{outline:2px solid var(--c1); outline-offset:1px}
+  #gloss-tip{position:fixed; display:none; max-width:340px; background:var(--ink); color:var(--bg); padding:11px 14px; border-radius:var(--r-sm); font-size:13px; line-height:1.65; z-index:9999; box-shadow:var(--sh-3); pointer-events:none; font-weight:400}
+
+  /* conclusion card (surface 0) */
+  .conc{margin:0 0 24px; border-radius:var(--r-lg); background:var(--panel); overflow:hidden; box-shadow:var(--sh-1); transition:box-shadow .22s, transform .22s; scroll-margin-top:84px; border:1px solid var(--line)}
+  .conc.c1{border-inline-start:5px solid var(--c1)}
+  .conc.c2{border-inline-start:5px solid var(--c2)}
+  .conc.c3{border-inline-start:5px solid var(--c3)}
+  .conc.c4{border-inline-start:5px solid var(--c4)}
+  .conc.open{box-shadow:var(--sh-3)}
+  .conc[id]:target{box-shadow:var(--sh-glow), var(--sh-3)}
+
+  .conc-head{display:grid; grid-template-columns:64px 1fr auto; gap:16px; align-items:start; padding:24px 26px; cursor:pointer; background:none; border:none; width:100%; text-align:start; font-family:inherit}
+  .conc-head:hover{background:rgba(0,0,0,0.014)}
+  .conc-num{font-size:38px; font-weight:800; line-height:.95; padding-top:4px; letter-spacing:-.02em}
+  .c1 .conc-num{color:var(--c1)} .c2 .conc-num{color:var(--c2)} .c3 .conc-num{color:var(--c3)} .c4 .conc-num{color:var(--c4)}
+  .conc-title{font-size:20.5px; font-weight:800; line-height:1.32; margin-bottom:10px; letter-spacing:-.005em; color:var(--ink)}
+  .conc-line{font-size:14.5px; color:var(--ink-soft); margin-bottom:12px; line-height:1.7}
+  .conc-do{font-size:13.5px; padding:8px 14px; border-radius:var(--r-sm); display:inline-block; line-height:1.55; max-width:100%}
+  .c1 .conc-do{background:var(--c1-soft); color:var(--c1)}
+  .c2 .conc-do{background:var(--c2-soft); color:var(--c2)}
+  .c3 .conc-do{background:var(--c3-soft); color:var(--c3)}
+  .c4 .conc-do{background:var(--c4-soft); color:var(--c4)}
+  .conc-do b{font-weight:800}
+  .conc-toggle{font-size:12px; font-weight:700; color:var(--soft); white-space:nowrap; padding:7px 13px; border-radius:999px; border:1px solid var(--line); background:var(--bg); align-self:start; margin-top:4px; transition:.14s}
+  .conc-toggle:hover{background:var(--c1-soft); border-color:var(--c1)}
+  .conc.open .conc-toggle::before{content:"סגור "}
+  .conc:not(.open) .conc-toggle::before{content:"פתח "}
+  .conc.open .conc-toggle::after{content:" ↑"}
+  .conc:not(.open) .conc-toggle::after{content:" ↓"}
+
+  /* surface 1: the case (inside an open conclusion) */
+  .conc-body{display:none; padding:0 28px 26px}
+  .conc.open .conc-body{display:block}
+  .case{padding:20px 0 6px; border-top:1px solid var(--line-soft); margin-top:4px}
+  .case h3{font-size:13.5px; font-weight:800; text-transform:uppercase; letter-spacing:.07em; color:var(--soft); margin:20px 0 9px}
+  .case h3:first-child{margin-top:0}
+  .case p{margin:0 0 12px; font-size:15.5px; line-height:1.72}
+  .case ul, .case ol{margin:0 0 13px; padding-inline-start:24px}
+  .case li{margin:7px 0; line-height:1.68}
+  .case b{font-weight:700}
+  .c1 .case b{color:var(--c1)} .c2 .case b{color:var(--c2)} .c3 .case b{color:var(--c3)} .c4 .case b{color:var(--c4)}
+
+  /* cross-link card */
+  .xlink{display:flex; align-items:center; gap:12px; padding:13px 17px; background:var(--bg); border:1px dashed var(--line); border-radius:var(--r-md); margin:16px 0 4px; font-size:14px; text-decoration:none; color:var(--ink); transition:.16s}
+  .xlink:hover{background:var(--c1-soft); border-color:var(--c1); border-style:solid; transform:translateY(-1px); box-shadow:var(--sh-1)}
+  .xlink .arr{font-size:19px; color:var(--c1); font-weight:800}
+  .xlink b{font-weight:700}
+
+  /* surface 2: evidence drawers */
+  .ev-grp{margin:20px 0 6px}
+  .ev-grp-label{font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--soft); margin-bottom:9px}
+  details.ev{margin:7px 0; border:1px solid var(--line); border-radius:var(--r-sm); background:var(--bg); transition:.14s}
+  details.ev[open]{background:var(--panel); box-shadow:var(--sh-1)}
+  details.ev > summary{cursor:pointer; padding:13px 16px; font-size:14.5px; font-weight:600; list-style:none; display:flex; align-items:center; gap:11px}
+  details.ev > summary::-webkit-details-marker{display:none}
+  details.ev > summary::after{content:'＋'; margin-inline-start:auto; color:var(--c1); font-size:13px; font-weight:800}
+  details.ev[open] > summary::after{content:'－'}
+  details.ev > summary .tag{font-size:11px; font-weight:800; padding:3px 9px; border-radius:999px; background:var(--c1-soft); color:var(--c1); white-space:nowrap; letter-spacing:.04em}
+  details.ev > .ev-body{padding:6px 18px 18px}
+  details.ev > .ev-body p{font-size:14.5px; line-height:1.7; margin:0 0 10px}
+  details.ev > .ev-body p:last-child{margin:0}
+
+  /* a quoted WhatsApp line */
+  .quote{background:var(--panel); border:1px solid var(--line); border-inline-start:3px solid var(--soft); border-radius:var(--r-sm); padding:11px 14px; margin:10px 0; font-size:14.5px; line-height:1.7}
+  .quote .meta{display:block; font-size:11.5px; color:var(--faint); font-weight:700; margin-bottom:5px; font-variant-numeric:tabular-nums}
+  .quote .meta .who{color:var(--ink); font-weight:800; margin-inline-end:7px}
+  .quote .meta .src{color:var(--faint); font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.92em; direction:ltr; unicode-bidi:embed; display:inline-block; margin-inline-start:6px}
+
+  /* visual timeline (C1 ev5) */
+  .timeline{margin:8px 0 4px}
+  .tl-item{display:flex; gap:14px; align-items:flex-start; padding-bottom:14px; position:relative}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-marker{display:flex; flex-direction:column; align-items:center; flex-shrink:0; padding-top:8px; min-width:14px}
+  .tl-dot{width:12px; height:12px; border-radius:50%; background:var(--c1); border:2px solid var(--bg); box-shadow:0 0 0 1px var(--c1-line); z-index:1; flex-shrink:0}
+  .tl-line{flex:1; width:2px; background:var(--c1-line); margin-top:6px; min-height:18px}
+  .tl-item:last-child .tl-line{display:none}
+  .tl-body{flex:1; min-width:0}
+  .tl-date{font-size:12px; font-weight:800; color:var(--c1); margin-bottom:5px; letter-spacing:.05em; font-variant-numeric:tabular-nums; text-transform:uppercase}
+  .tl-body .quote{margin:0}
+
+  /* document text reproduction */
+  .doc{background:#f6f1e7; border:1px solid var(--line); border-radius:var(--r-sm); padding:14px 17px; margin:10px 0; font-size:14.5px; line-height:1.72}
+  .doc-meta{font-size:11.5px; color:var(--faint); font-weight:700; margin-bottom:8px; font-variant-numeric:tabular-nums}
+  .doc-body{font-style:italic}
+
+  /* tables */
+  table{width:100%; border-collapse:collapse; margin:10px 0 14px; font-size:14px; background:var(--panel); border-radius:var(--r-sm); overflow:hidden; box-shadow:var(--sh-1)}
+  th,td{text-align:start; padding:10px 12px; border-bottom:1px solid var(--line-soft); vertical-align:top}
+  th{font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--soft); font-weight:700; background:var(--bg)}
+  td code, th code{direction:ltr; unicode-bidi:embed; display:inline-block; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.9em}
+  tr:last-child td{border-bottom:none}
+  .b-true{background:#dff2e6; color:#1e6240; padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; display:inline-block; letter-spacing:.02em}
+  .b-false{background:#fde2dd; color:#8c2a17; padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; display:inline-block; letter-spacing:.02em}
+  .b-mid{background:#fff1d3; color:#8a5b00; padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; display:inline-block}
+  .b-zero{background:#1a2030; color:#fbfaf7; padding:3px 11px; border-radius:999px; font-size:11.5px; font-weight:800; display:inline-block; letter-spacing:.04em}
+
+  code.inline{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.9em; background:#f1ece2; padding:1.5px 6px; border-radius:4px; direction:ltr; unicode-bidi:embed; display:inline-block}
+
+  /* the synthesis "zero" callout in C4 */
+  .zero-block{background:linear-gradient(135deg, var(--c4-soft) 0%, #fff 100%); border:1px solid var(--c4-line); border-inline-start:5px solid var(--c4); border-radius:var(--r-md); padding:20px 24px; margin:16px 0; display:flex; gap:18px; align-items:center; box-shadow:var(--sh-1)}
+  .zero-block .big{font-size:58px; font-weight:800; color:var(--c4); line-height:1; font-variant-numeric:tabular-nums; flex-shrink:0}
+  .zero-block .txt{font-size:14.5px; line-height:1.65}
+  .zero-block .txt b{color:var(--c4); font-weight:800}
+
+  /* ===== CLOSING CHAPTER ===== */
+  .closer{margin:50px 0 0; border-radius:var(--r-xl); padding:50px 40px 46px; background:linear-gradient(160deg, var(--close-bg) 0%, var(--close-bg2) 55%, var(--close-bg3) 100%); color:var(--close-ink); box-shadow:0 18px 40px rgba(15,26,44,0.22), 0 4px 10px rgba(15,26,44,0.10); scroll-margin-top:84px; position:relative; overflow:hidden}
+  .closer::before{content:'★'; position:absolute; top:24px; inset-inline-end:34px; font-size:46px; color:rgba(212,168,91,0.18); line-height:1; font-weight:800; pointer-events:none}
+  .closer .closer-eyebrow{text-transform:uppercase; letter-spacing:.18em; font-size:11.5px; font-weight:700; color:var(--close-accent); margin-bottom:14px}
+  .closer h2{font-size:clamp(24px,4vw,32px); font-weight:800; color:var(--close-ink); letter-spacing:-.008em; line-height:1.22; margin-bottom:14px}
+  .closer .closer-lead{font-size:16.5px; line-height:1.72; color:var(--close-soft); margin-bottom:22px; max-width:640px}
+  .closer .closer-lead b{color:var(--close-ink); font-weight:700}
+  .closer h3{font-size:13.5px; font-weight:800; text-transform:uppercase; letter-spacing:.1em; color:var(--close-accent); margin:26px 0 12px}
+  .closer p{font-size:15.5px; line-height:1.72; color:var(--close-soft); margin:0 0 13px}
+  .closer ul{margin:0 0 14px; padding-inline-start:24px} .closer li{margin:8px 0; color:var(--close-soft); line-height:1.7}
+  .closer li b{color:var(--close-ink); font-weight:700}
+  .closer .humble{background:rgba(255,255,255,0.04); border-inline-start:2px solid rgba(212,168,91,0.35); border-radius:var(--r-sm); padding:14px 18px; margin:18px 0; color:var(--close-soft); font-size:14.5px; line-height:1.7; font-style:italic}
+  .closer .humble b{color:var(--close-ink); font-style:normal; font-weight:700}
+  .closer .promise{background:linear-gradient(135deg, rgba(212,168,91,0.13) 0%, rgba(212,168,91,0.05) 100%); border-inline-start:4px solid var(--close-accent); border-radius:var(--r-md); padding:18px 22px; margin:18px 0 22px; color:var(--close-ink); font-size:15px; line-height:1.72; box-shadow:0 4px 14px rgba(0,0,0,0.12)}
+  .closer .promise b{color:var(--close-accent-soft); font-weight:800}
+  .closer .promise .head{font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.1em; color:var(--close-accent); margin-bottom:10px; display:block}
+  .closer .closer-sign{margin-top:30px; padding-top:22px; border-top:1px solid rgba(212,168,91,0.25); font-size:15px; color:var(--close-ink); font-weight:600; line-height:1.7}
+  .closer .closer-sign .name{font-style:italic; display:block; margin-top:4px}
+  .closer .paths{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0 18px}
+  .closer .path{padding:18px 20px; background:rgba(255,255,255,0.04); border:1px solid rgba(212,168,91,0.22); border-radius:var(--r-md); transition:.18s}
+  .closer .path:hover{background:rgba(255,255,255,0.06)}
+  .closer .path.preferred{background:rgba(212,168,91,0.10); border-color:rgba(212,168,91,0.45); box-shadow:0 4px 14px rgba(0,0,0,0.10)}
+  .closer .path-head{font-size:14px; font-weight:800; color:var(--close-accent); letter-spacing:.05em; margin-bottom:10px; display:flex; align-items:center; gap:9px; text-transform:uppercase}
+  .closer .path-head .badge{font-size:10px; padding:2.5px 9px; border-radius:999px; background:var(--close-accent); color:var(--close-bg); letter-spacing:.05em; font-weight:800}
+  .closer .path-body{font-size:14.5px; line-height:1.7; color:var(--close-ink)}
+  .closer .path-body span.dim{color:var(--close-soft); font-size:13.5px; display:block; margin-top:6px}
+  @media(max-width:660px){.closer .paths{grid-template-columns:1fr}}
+
+  footer{border-top:1px solid var(--line); margin-top:42px; padding-top:20px; color:var(--faint); font-size:12.5px; line-height:1.72}
+
+  @media print{
+    .navbar{display:none}
+    body{background:#fff}
+    .conc, details, .doc, .closer{break-inside:avoid}
+    .conc-body{display:block !important}
+    details.ev[open]{box-shadow:none}
+    .closer{background:#fff; color:var(--ink); border:1px solid var(--line); box-shadow:none}
+    .closer h2, .closer .closer-lead, .closer p, .closer li, .closer .closer-sign, .closer .humble, .closer .promise, .closer .path-body{color:var(--ink)}
+    .closer h3, .closer .closer-eyebrow, .closer .promise .head, .closer .path-head{color:var(--c1)}
+    .closer::before{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================== GATE OVERLAY ============================== -->
+<div id="gate-overlay" style="display:none; position:fixed; inset:0; background:linear-gradient(160deg, #0d1828 0%, #1a2a44 55%, #243456 100%); z-index:10000; flex-direction:column; align-items:center; justify-content:center; padding:40px 24px; color:#f3ede0; font-family:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue','Arial Hebrew',Arial,sans-serif">
+  <div style="max-width:440px; width:100%; text-align:center">
+    <div style="font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#d4a85b; margin-bottom:18px">תזכיר אישי · יהושע פרחי</div>
+    <h1 style="font-size:28px; font-weight:800; margin-bottom:14px; line-height:1.2; color:#f3ede0">המסמך מיועד לקריאה אישית.</h1>
+    <p style="font-size:15px; color:#c7c9d4; line-height:1.7; margin-bottom:26px">כדי להמשיך, ציין את שמך.</p>
+    <form id="gate-form">
+      <input id="gate-input" type="text" autocomplete="off" autofocus dir="rtl" placeholder="השם שלך" style="width:100%; padding:14px 16px; font-size:16px; border-radius:8px; border:1px solid rgba(212,168,91,0.4); background:rgba(255,255,255,0.06); color:#f3ede0; font-family:inherit; outline:none; margin-bottom:14px; box-sizing:border-box">
+      <button type="submit" style="width:100%; padding:13px 20px; font-size:15px; font-weight:700; border-radius:8px; border:none; background:#d4a85b; color:#0d1828; cursor:pointer; font-family:inherit; letter-spacing:.02em">פתח</button>
+    </form>
+    <div id="gate-error" style="display:none; color:#f0d3b6; font-size:13.5px; margin-top:16px; line-height:1.6"></div>
+  </div>
+</div>
+
+<div id="gate-expired" style="display:none; position:fixed; inset:0; background:#0d1828; z-index:10000; flex-direction:column; align-items:center; justify-content:center; padding:40px 24px; color:#f3ede0; font-family:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue','Arial Hebrew',Arial,sans-serif">
+  <div style="max-width:440px; text-align:center">
+    <h1 style="font-size:24px; font-weight:700; margin-bottom:14px; color:#f3ede0">המסמך כבר אינו זמין.</h1>
+    <p style="font-size:14px; color:#8a8fa3; line-height:1.7">חלון הצפייה נסגר.</p>
+  </div>
+</div>
+
+<div id="main-content">
+
+<div class="navbar" role="navigation" aria-label="ניווט בעמוד">
+  <button id="nav-back" type="button" aria-label="חזור (היסטוריה)">חזור</button>
+  <button id="nav-fwd" type="button" aria-label="קדימה (היסטוריה)">קדימה</button>
+  <a class="home" href="#" id="nav-home" aria-label="ראש העמוד, סגור כל הפתחים">ראש העמוד</a>
+  <div class="spacer"></div>
+  <div class="crumbs" id="crumbs">פתוח כעת: <b id="crumbs-state">שום מסקנה לא פתוחה</b></div>
+</div>
+
+<main class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">תזכיר עובדתי + פרק סיום · 3 ביוני 2026</div>
+    <h1>תיק יהושע פרחי.</h1>
+    <p class="lead">סיכום עובדתי של הדיון על פוליסת Clal 116857632 שהתנהל ב-28 וב-29 בדצמבר 2025, ושל המצב היום.</p>
+    <p class="sub">המסמך מחולק לשני חלקים נפרדים. <b>ארבע מסקנות עובדתיות</b>, כל אחת עומדת בפני עצמה ומסתכמת בצעד תפעולי. בקצה העמוד, <b>פרק סיום נפרד</b> שמסתכל קדימה. גם בלעדיו, ארבע המסקנות עומדות.</p>
+  </div>
+
+  <div class="howto">
+    <b>איך לקרוא.</b>
+    <ul>
+      <li>חמישה כרטיסים למטה. לחיצה על מסקנה פותחת את הטיעון המלא ואת תיק הראיות; אפשר לעצור בכותרת או לרדת לעומק.</li>
+      <li>מסקנות מצליבות זו לזו ("ראה גם"). כפתור <b>חזור</b> בראש העמוד מחזיר אחורה.</li>
+      <li>ריחוף על <span class="gloss" data-tip="מונח עם הסבר קצר. דוגמה: ההסבר הזה.">מונח מסומן</span> פותח הסבר.</li>
+    </ul>
+  </div>
+
+  <nav class="map" aria-label="מפת מסקנות">
+    <a href="#c1" data-jump="c1" class="map-card mc1"><span class="map-num">1</span><span class="map-text">הביטול עצמו</span><span class="map-sub">סטטוס תפעולי</span></a>
+    <a href="#c2" data-jump="c2" class="map-card mc2"><span class="map-num">2</span><span class="map-text">השירות הצבאי</span><span class="map-sub">הסיבה הראשונה</span></a>
+    <a href="#c3" data-jump="c3" class="map-card mc3"><span class="map-num">3</span><span class="map-text">הכפילות עם הראל</span><span class="map-sub">הסיבה השנייה</span></a>
+    <a href="#c4" data-jump="c4" class="map-card mc4"><span class="map-num">4</span><span class="map-text">סיכום ופיצוי</span><span class="map-sub">תמונה כוללת</span></a>
+    <span class="map-sep" aria-hidden="true"></span>
+    <a href="#afterword" data-jump="afterword" class="map-card mcclose"><span class="map-num">★</span><span class="map-text">פרק סיום</span><span class="map-sub">רעיון לסיום</span></a>
+  </nav>
+
+  <!-- ============================== CONCLUSION 1 ============================== -->
+  <article class="conc c1" id="c1" data-title="הביטול של Clal עומד כעת לביצוע">
+    <button class="conc-head" type="button" aria-expanded="false" aria-controls="c1-body">
+      <div class="conc-num">1</div>
+      <div>
+        <div class="conc-title">הבקשה לבטל את פוליסת Clal 116857632 עומדת ומחכה לביצוע.</div>
+        <p class="conc-line">הבקשה הוגשה ב-28/12/2025. בבירור ישיר עם חברת הביטוח ב-29/12 התברר שלא הוגשה בקשת ביטול, והפוליסה עומדת. הנתיב הזה אינו תלוי בשום נושא אחר; הוא צעד תפעולי בודד.</p>
+        <span class="conc-do"><b>הצעד הנדרש:</b> ביצוע הביטול של פוליסה 116857632 ב-Clal, ושליחת אישור בכתב.</span>
+      </div>
+      <span class="conc-toggle"></span>
+    </button>
+
+    <div class="conc-body" id="c1-body">
+      <div class="case">
+        <h3>למה התבקש הביטול</h3>
+        <p>על שני אדנים, כל אחד עומד בפני עצמו. <a href="#c2" data-jump="c2"><b>מסקנה 2</b></a> מסבירה שבתקופת השירות הצבאי של יהושע, רוב הכיסוי שב-Clal אינו מתממש בכלל. <a href="#c3" data-jump="c3"><b>מסקנה 3</b></a> מסבירה שגם אחרי השירות, הכיסוי כפול ביחס לפוליסת הראל הקיימת. שני האדנים גם יחד הם הסיבה לבקשה.</p>
+
+        <h3>הסטטוס היום</h3>
+        <ol>
+          <li>הבקשה הוצגה בכתב ב-28/12/2025 בשעה 17:16: "לגבי ביטול הפוליסה של יהושוע אתה בטוח?".</li>
+          <li>ב-29/12/2025 בשעה 12:27 דווח בכתב שחברת הביטוח אמרה בשיחת טלפון "שלא הוגש ביטול ושהיא עומדת על קנה".</li>
+          <li>המסמך שהוצג כתשובה (Harel BR33268744, 21/12/2025) מתייחס לפוליסה אחרת לגמרי, Harel 503782553, ולא לפוליסה Clal 116857632 שעמדה בבקשת הביטול.</li>
+        </ol>
+
+        <h3>תיק הראיות</h3>
+      </div>
+
+      <div class="ev-grp">
+        <details class="ev" id="c1-e1"><summary><span class="tag">ראיה 1</span>הבקשה הוצגה במפורש</summary>
+          <div class="ev-body">
+            <p>השאלה הוצגה בלשון אישור. הפנייה הופנתה אל הסוכן ב-WhatsApp ארבע דקות לפני שהוצגה תשובה.</p>
+            <div class="quote"><span class="meta"><span class="who">מנחם</span> 28/12/2025 17:16 <span class="src">_chat.txt:78</span></span>"לגבי ביטול הפוליסה של יהושוע אתה בטוח?"</div>
+          </div>
+        </details>
+
+        <details class="ev" id="c1-e2"><summary><span class="tag">ראיה 2</span>החברה אמרה שלא הוגש ביטול</summary>
+          <div class="ev-body">
+            <p>בבוקר 29/12, מספר שעות אחרי ההצגה הקודמת, נעשתה שיחת טלפון ישירה אל חברת הביטוח. תוצאת הבירור דווחה בכתב באותו צ'אט.</p>
+            <div class="quote"><span class="meta"><span class="who">מנחם</span> 29/12/2025 12:27 <span class="src">_chat.txt:119-120</span></span>"אני התקשרתי אליהם הם אמרו לי שלא הוגש ביטול ושהיא עומדת על קנה. תבדוק איתם למה הם שולחים לך שטויות. מה שהם אמרו לי שזה יכול לקרוא בגלל שהפוליסות של אישתי ובית היו עם זאת של יהושוע בחבילה משפחתית."</div>
+          </div>
+        </details>
+
+        <details class="ev" id="c1-e3"><summary><span class="tag">ראיה 3</span>מספר הפוליסה במסמך שהוצג לא תאם את הבקשה</summary>
+          <div class="ev-body">
+            <p>בארבע דקות אחרי שאלת האישור, נשלחה תמונה. התמונה היא מסמך מ-Harel, אסמכתא BR33268744 מ-21/12/2025, ע"ש יהושע. הפוליסה במסמך היא Harel 503782553. הפוליסה שעמדה ביעד הבקשה היא Clal 116857632. שני מספרים שונים, שתי חברות שונות, שתי פוליסות שונות.</p>
+            <table>
+              <tr><th>שדה</th><th>במסמך שהוצג</th><th>בבקשה שנשלחה</th></tr>
+              <tr><td>חברה</td><td>Harel</td><td>Clal</td></tr>
+              <tr><td>מספר פוליסה</td><td><code>503782553</code></td><td><code>116857632</code></td></tr>
+              <tr><td>סוג</td><td>הוותיקה, מתחדשת</td><td>הצעירה (תחילה 01/06/2024)</td></tr>
+            </table>
+          </div>
+        </details>
+
+        <details class="ev" id="c1-e4"><summary><span class="tag">ראיה 4</span>גם המסמך עצמו לא אומר "בוטלה"</summary>
+          <div class="ev-body">
+            <p>הטקסט המלא של המסמך שהוצג, מילה במילה:</p>
+            <div class="doc">
+              <div class="doc-meta">Harel, אסמכתא BR33268744, 21/12/2025, sherut-life@harel-Ins.co.il, פוליסה 503782553</div>
+              <div class="doc-body">"הננו להסב את תשומת לבך כי הגיעה לחברתנו בקשת המבוטח/הממשלם לביטול כיסוי/גריעת מבוטח/פוליסה שבנדון. אנו חייבים לפעול לפי ההוראות הנ"ל, אך אנו מציעים לך להתקשר מיד למבוטח ולוודא כי הבין את משמעות הביטול ולנסות לשכנעו לחזור בו מהחלטתו."</div>
+            </div>
+            <p>המסמך מדווח שבקשה התקבלה ומציע לסוכן לאמת מול המבוטח. הוא לא מאשר ביצוע ולא קובע סטטוס סופי.</p>
+          </div>
+        </details>
+
+        <details class="ev" id="c1-e5"><summary><span class="tag">ראיה 5</span>ציר זמן מלא של הרצף בין 21/12 ל-29/12</summary>
+          <div class="ev-body">
+            <p>ציר זמן מהחוט עצמו, כל שורה מצוטטת מ-<code class="inline">_chat.txt</code>:</p>
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+                <div class="tl-body">
+                  <div class="tl-date">21/12/2025</div>
+                  <div class="quote"><span class="meta"><span class="who">הראל אל הסוכן</span></span>BR33268744 מגיע ל-Newcom. נושא: בקשה לבטל פוליסה 503782553.</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+                <div class="tl-body">
+                  <div class="tl-date">28/12/2025 · 16:15</div>
+                  <div class="quote"><span class="meta"><span class="who">מנחם</span><span class="src">_chat.txt:65</span></span>"שלחתי" (פוליסת המקור נשלחה למייל Meirc@newcom.co.il לבדיקה).</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+                <div class="tl-body">
+                  <div class="tl-date">28/12/2025 · 17:16</div>
+                  <div class="quote"><span class="meta"><span class="who">מנחם</span><span class="src">_chat.txt:78</span></span>"לגבי ביטול הפוליסה של יהושוע אתה בטוח?"</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+                <div class="tl-body">
+                  <div class="tl-date">28/12/2025 · 17:20</div>
+                  <div class="quote"><span class="meta"><span class="who">מאיר</span><span class="src">_chat.txt:79</span></span>תמונה (מסמך BR33268744 על פוליסה 503782553).</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+                <div class="tl-body">
+                  <div class="tl-date">29/12/2025 · 09:26</div>
+                  <div class="quote"><span class="meta"><span class="who">מאיר</span><span class="src">_chat.txt:80-82</span></span>"בוקר טוב<br>התוכניות מוכנות<br>אתקשר ב10"</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+                <div class="tl-body">
+                  <div class="tl-date">29/12/2025 · 10:14</div>
+                  <div class="quote"><span class="meta"><span class="who">מנחם</span><span class="src">_chat.txt:83</span></span>"אחי מה נסגר איתך לא התבטלה ליהושע פוליסה אחי תיסגר על עצמך"</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+                <div class="tl-body">
+                  <div class="tl-date">29/12/2025 · 12:27</div>
+                  <div class="quote"><span class="meta"><span class="who">מנחם</span><span class="src">_chat.txt:119-120</span></span>"אני התקשרתי אליהם הם אמרו לי שלא הוגש ביטול ושהיא עומדת על קנה..."</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+                <div class="tl-body">
+                  <div class="tl-date">29/12/2025 · 12:30</div>
+                  <div class="quote"><span class="meta"><span class="who">מנחם</span><span class="src">_chat.txt:121</span></span>"שוב אתה אמרת לי שהפוליסה בוטלה ואת זה לא כתוב אפילו בהודעה שקיבלת."</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+                <div class="tl-body">
+                  <div class="tl-date">29/12/2025 · 12:31</div>
+                  <div class="quote"><span class="meta"><span class="who">מנחם</span><span class="src">_chat.txt:122</span></span>"ואת הכל יכולת לברר בטלפון כמוני"</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================== CONCLUSION 2 ============================== -->
+  <article class="conc c2" id="c2" data-title="החזקת Clal 116857632 לא הגיונית בנסיבותיו של יהושע">
+    <button class="conc-head" type="button" aria-expanded="false" aria-controls="c2-body">
+      <div class="conc-num">2</div>
+      <div>
+        <div class="conc-title">הסיבה הראשונה לבקשת הביטול: בתקופת השירות הצבאי הכיסוי שב-Clal אינו פועל.</div>
+        <p class="conc-line">יהושע בשירות חובה. הטיפול הרפואי בתקופה זו ניתן על ידי חיל הרפואה. רכיבי השיפוי שבפוליסה משלמים רק כנגד הוצאה רפואית ממשית של המבוטח, ובתקופת השירות אין הוצאה כזו. רכיב מחלות קשות הוא חריג שעובד גם בתקופה הזו, ואותו רכיב כפול בפוליסה הוותיקה של הראל (ראה מסקנה 3).</p>
+        <span class="conc-do"><b>הצעד הנדרש:</b> השלמת הביטול. הצעד התפעולי במסקנה 1.</span>
+      </div>
+      <span class="conc-toggle"></span>
+    </button>
+
+    <div class="conc-body" id="c2-body">
+      <div class="case">
+        <h3>הטיעון בקצרה</h3>
+        <p>הפוליסה ב-Clal פעילה ומחויבת בפרמיה, אבל בתקופת השירות הצבאי הכיסוי שבה במישור השיפוי אינו פועל. הטיפול ניתן על ידי הצבא ואין הוצאה לשפות. הרכיב היחיד שכן ממשיך לעבוד הוא מחלות קשות, והוא כפול עם רכיב מקביל בפוליסת הראל. הבקשה לבטל את Clal נשענת על הקרקע הזו. המעמד הצבאי של יהושע ידוע לסוכן בכתב מנובמבר 2024.</p>
+
+        <h3>שני אדנים, כל אחד עומד בפני עצמו</h3>
+        <ol>
+          <li><b>שכבת השיפוי לא מתממשת בתקופת השירות.</b> רכיבי <span class="gloss" data-tip="כיסוי המשלם את ההוצאה הרפואית בפועל של המבוטח, עד לתקרה שמוגדרת ברכיב. אם אין הוצאה (כי גורם אחר נושא בה), אין מה לשפות.">שיפוי</span> משלמים כנגד הוצאה רפואית ממשית של המבוטח. בתקופת השירות הטיפול ניתן על ידי <span class="gloss" data-tip="זרוע הרפואה של צבא ההגנה לישראל. נושאת בעלות הטיפולים הרפואיים של חיילים בשירות חובה.">חיל הרפואה</span> ואין הוצאה. הפרמיה משולמת במלואה, התמורה במישור הזה היא אפס.</li>
+          <li><b>הכיסוי לאחר השירות קיים כבר בפוליסה השנייה.</b> כל קטגוריות השיפוי שב-Clal מכוסות גם בפוליסת הראל הוותיקה (503782553), שכל רכיביה מתחדשים. ראה <a href="#c3" data-jump="c3">מסקנה 3</a> לטבלת השוואה.</li>
+        </ol>
+
+        <h3>מה נשאר רלוונטי בתקופת השירות ומה לא</h3>
+        <p>אבחנה לפי סוג רכיב:</p>
+        <ul>
+          <li><b>שיפוי</b> (ייעוץ ובדיקות, השתלות, תרופות, ניתוחים בחו"ל, ניתוח אחיד): אינו מתממש בתקופת השירות. אין הוצאה ולכן אין מה לשפות.</li>
+          <li><b>תשלום חד פעמי על אבחנה</b> (מחלות קשות): ממשיך לפעול. הוא נשען על האבחנה עצמה ולא על הוצאה רפואית. זהו הרכיב היחיד שעובד תפקודית בתקופה הזו.</li>
+        </ul>
+        <p>גם הרכיב החריג אינו עומד יחידי: מחלות קשות קיים גם בפוליסת הראל, ובסכום פרמיה גבוה יותר (18.59 ש"ח חודשית בהראל לעומת 15.03 ש"ח ב-Clal). הרכיב היחיד שכן עובד בתקופה הזו כפול ממילא עם פוליסה אחרת שמחזיק יהושע.</p>
+
+        <h3>תיק הראיות</h3>
+      </div>
+
+      <div class="ev-grp">
+        <details class="ev" id="c2-e1"><summary><span class="tag">ראיה 1</span>הסוכן ידע על סטטוס השירות של יהושע, כשנה לפני דיון הביטול</summary>
+          <div class="ev-body">
+            <p>שני ציטוטים ישירים מההתכתבות ב-WhatsApp עם הסוכן בנובמבר 2024 (מקור: <code class="inline">WhatsApp Chat with מאיר ביטוח.txt</code>):</p>
+            <div class="quote"><span class="meta"><span class="who">מנחם</span> 06/11/2024 12:59 <span class="src">meir-2024.txt:1101</span></span>"הוא היה עד עכשיו בבקום ועכשיו אישתי לוקחת אותו למיון"</div>
+            <div class="quote"><span class="meta"><span class="who">מנחם</span> 10/11/2024 20:04 <span class="src">meir-2024.txt:1103</span></span>"הוא בסדר. בסוף הכל נעשה במיון ואני מנסה להעביר את העלות לצבא"</div>
+            <p>שני המסרים נשלחו ישירות לסוכן. <span class="gloss" data-tip="בסיס הקליטה והמיון של צבא ההגנה לישראל. תחנת המעבר הראשונה של מגויסים. ההפניה לבקום משייכת את המבוטח לשירות חובה.">בקום</span> והכוונה להעביר את העלות הרפואית לצבא קובעים בכתב את מעמד השירות של יהושע ואת הציפייה הקיימת שהצבא יישא בעלות. המידע היה ברשות הסוכן יותר משנה לפני שעלתה השאלה על ביטול הפוליסה ב-Clal.</p>
+          </div>
+        </details>
+
+        <details class="ev" id="c2-e2"><summary><span class="tag">ראיה 2</span>פירוט הקטגוריות בפוליסה ביחס לתקופת השירות</summary>
+          <div class="ev-body">
+            <p>חלוקת רכיבי Clal 116857632 לפי סוג, וסטטוס המימוש שלהם בתקופת השירות:</p>
+            <table>
+              <tr><th>רכיב ב-Clal 116857632</th><th>סוג</th><th>בתקופת השירות</th></tr>
+              <tr><td>ייעוץ ובדיקות</td><td>שיפוי</td><td><span class="b-false">לא מתממש</span></td></tr>
+              <tr><td>השתלות וטיפולים מיוחדים</td><td>שיפוי</td><td><span class="b-false">לא מתממש</span></td></tr>
+              <tr><td>תרופות (x2)</td><td>שיפוי</td><td><span class="b-false">לא מתממש</span></td></tr>
+              <tr><td>ניתוחים בחו"ל</td><td>שיפוי</td><td><span class="b-false">לא מתממש</span></td></tr>
+              <tr><td>ניתוח אחיד</td><td>שיפוי</td><td><span class="b-false">לא מתממש</span></td></tr>
+              <tr><td>מחלות קשות</td><td>תשלום חד פעמי על אבחנה</td><td><span class="b-true">ממשיך לעבוד</span></td></tr>
+            </table>
+            <p>כל רכיבי השיפוי בפוליסה הם כיסוי כנגד הוצאה ממשית. כשהטיפול ניתן במסגרת הצבא ואין הוצאה למבוטח, גם פוליסה פעילה אינה מקנה כיסוי. רכיב מחלות קשות אינו מסוג שיפוי אלא תשלום חד פעמי על אבחנה, ולכן הוא ממשיך לפעול גם בתקופה הזו.</p>
+          </div>
+        </details>
+      </div>
+
+      <a class="xlink" href="#c3" data-jump="c3">
+        <span class="arr">↗</span>
+        <span>החפיפה המלאה עם פוליסת הראל מפורטת ב<b>מסקנה 3</b>.</span>
+      </a>
+      <a class="xlink" href="#c1" data-jump="c1">
+        <span class="arr">↗</span>
+        <span>הצעד התפעולי הנגזר: השלמת הביטול. ראה <b>מסקנה 1</b>.</span>
+      </a>
+    </div>
+  </article>
+
+  <!-- ============================== CONCLUSION 3 ============================== -->
+  <article class="conc c3" id="c3" data-title="שתי פוליסות בריאות חופפות רצות במקביל">
+    <button class="conc-head" type="button" aria-expanded="false" aria-controls="c3-body">
+      <div class="conc-num">3</div>
+      <div>
+        <div class="conc-title">הסיבה השנייה לבקשת הביטול: הכיסוי ב-Clal כפול לכיסוי הראל הקיים.</div>
+        <p class="conc-line">יהושע מחזיק במקביל את <code class="inline">Harel 503782553</code> ואת <code class="inline">Clal 116857632</code>. שתיהן מכסות את אותן חמש קטגוריות שיפוי. שיפוי משלם על הוצאה בפועל, פעם אחת. הפרמיה השנייה אינה מקנה כיסוי נוסף, רק פרמיה נוספת.</p>
+        <span class="conc-do"><b>הצעד הנדרש:</b> אישור שהכפילות זוהתה ושהמהלך לסגירת הצעירה (Clal 116857632) בוצע. הצעד התפעולי במסקנה 1.</span>
+      </div>
+      <span class="conc-toggle"></span>
+    </button>
+
+    <div class="conc-body" id="c3-body">
+      <div class="case">
+        <h3>הטיעון בקצרה</h3>
+        <p>מצב של שתי פוליסות בריאות מקבילות אצל אותו מבוטח אינו מקרה הקצה. הוא המצב המתמשך כיום וגם לפני דצמבר 2025. הכפילות הזו אינה רק שאלה כלכלית; היא גם הרקע שעליו עלה רצף האירועים של 28 ו-29 בדצמבר 2025 (ראה מסקנה 1).</p>
+
+        <h3>צד מול צד</h3>
+        <p>תצוגה מקוצרת של רכיבי שתי הפוליסות, לפי הר הביטוח (29/05/2026):</p>
+        <table>
+          <tr><th>קטגוריה</th><th>Harel 503782553</th><th>Clal 116857632</th><th>סוג</th></tr>
+          <tr><td>ייעוץ ובדיקות</td><td><span class="b-true">פעיל, מתחדש</span></td><td><span class="b-true">פעיל</span></td><td>שיפוי</td></tr>
+          <tr><td>השתלות וטיפולים מיוחדים</td><td><span class="b-true">פעיל, מתחדש</span></td><td><span class="b-true">פעיל</span></td><td>שיפוי</td></tr>
+          <tr><td>תרופות (x2)</td><td><span class="b-true">פעיל, מתחדש</span></td><td><span class="b-true">פעיל</span></td><td>שיפוי</td></tr>
+          <tr><td>ניתוחים בחו"ל</td><td><span class="b-true">פעיל, מתחדש</span></td><td><span class="b-true">פעיל</span></td><td>שיפוי</td></tr>
+          <tr><td>ניתוח אחיד (משלים שב"ן)</td><td><span class="b-true">פעיל, מתחדש</span></td><td><span class="b-true">פעיל, 34.70 ש"ח</span></td><td>שיפוי</td></tr>
+          <tr><td>מחלות קשות</td><td><span class="b-true">פעיל, 18.59 ש"ח</span></td><td><span class="b-true">פעיל, 15.03 ש"ח</span></td><td>תשלום חד פעמי</td></tr>
+          <tr><td>טיפולים מתקדמים</td><td><span class="b-true">פעיל, מתחדש</span></td><td><span class="b-false">אין</span></td><td>שיפוי</td></tr>
+        </table>
+        <p>חמש הקטגוריות הראשונות חופפות ישירות. בכל אחת מהן, שתי הפוליסות משלמות על אותה הוצאה <span class="gloss" data-tip="שיפוי מכסה את ההוצאה הממשית עד תקרה. שני שיפוי על אותו טיפול אינם מכפילים את הסכום; אחד מהם מכסה והשני נשאר ללא מימוש. הפרמיה השנייה משולמת בכל זאת.">פעם אחת</span>. מחלות קשות הוא יחיד שמשלם סכום קבוע על אבחנה ולכן ניתן באופן אמיתי להחזיק שני כיסויים. טיפולים מתקדמים הוא רכיב יחיד שקיים רק בהראל ולא ב-Clal.</p>
+
+        <h3>למה הוותיקה היא שנשמרת</h3>
+        <p>פוליסת הראל 503782553 ותיקה מהפוליסה ב-Clal. כל רכיביה מסומנים <span class="gloss" data-tip="כיסוי שמתחדש שנה בשנה ללא חיתום מחודש. שומר על תקופות אכשרה ותנאים מקוריים. רכיב מתחדש שווה יותר מרכיב חדש בעל אותה תקרה.">"מתחדש"</span>, שמשמעו תקופות אכשרה שנפתחו בעבר נשמרו ותנאי החיתום המקוריים נשמרו. ל-Clal, שתחילתה ב-01/06/2024, אין את היתרון הזה. בנוסף, רכיב טיפולים מתקדמים קיים רק בהראל ולא ב-Clal. סגירת הצעירה ושימור הוותיקה משאירה את הכיסוי הרחב יותר על כנו.</p>
+
+        <h3>תיק הראיות</h3>
+      </div>
+
+      <div class="ev-grp">
+        <details class="ev" id="c3-e1"><summary><span class="tag">ראיה 1</span>הסטטוס בהר הביטוח</summary>
+          <div class="ev-body">
+            <p>על פי משיכת הר הביטוח של יהושע ב-29/05/2026 (חודש לפני הוצאת תזכיר זה), שתי הפוליסות פעילות במלואן. אין רישום של בקשת ביטול שיצאה לפועל בצד Clal. בצד Harel, פוליסה 503782553 פעילה ולא בוטלה למרות בקשת BR33268744 שהגיעה ב-21/12/2025 (ראה <a href="#c1" data-jump="c1">מסקנה 1, ראיה 4</a>).</p>
+          </div>
+        </details>
+      </div>
+
+      <a class="xlink" href="#c4" data-jump="c4">
+        <span class="arr">↗</span>
+        <span>הסינתזה: מה Clal מוסיפה ייחודית מעל הראל? ראה <b>מסקנה 4</b>.</span>
+      </a>
+    </div>
+  </article>
+
+  <!-- ============================== CONCLUSION 4 ============================== -->
+  <article class="conc c4" id="c4" data-title="תרומה ייחודית של Clal = אפס. שיחת פיצוי במקום">
+    <button class="conc-head" type="button" aria-expanded="false" aria-controls="c4-body">
+      <div class="conc-num">4</div>
+      <div>
+        <div class="conc-title">סיכום: הכיסוי הייחודי שמוסיפה פוליסת Clal 116857632 הוא אפס. פתיחת שיחה על פיצוי.</div>
+        <p class="conc-line">בחינה של שלוש הפוליסות שמחזיק יהושע מראה שכל מה ש-Clal 116857632 מכסה מכוסה גם בפוליסת הראל. אין רכיב יחיד בה שאינו קיים בהראל. הפרמיה החודשית ששולמה היא תשלום על שכבה שלא הוסיפה כיסוי ממשי לקיים.</p>
+        <span class="conc-do"><b>הצעד הנדרש:</b> השלמת הביטול (ראה מסקנה 1), ופתיחת שיחה עניינית על פיצוי על הפרמיה ששולמה על כיסוי שלא הוסיף דבר.</span>
+      </div>
+      <span class="conc-toggle"></span>
+    </button>
+
+    <div class="conc-body" id="c4-body">
+      <div class="case">
+        <h3>הניתוח</h3>
+        <p>שלוש הפוליסות שמחזיק יהושע, נכון להר הביטוח 29/05/2026:</p>
+        <ul>
+          <li><b>Harel 503782553</b>. שמונה רכיבי בריאות, כולם מתחדשים. כיסוי בריאות מלא.</li>
+          <li><b>Clal 116857632</b>. שבעה רכיבי בריאות, כולם חופפים לחלוטין עם הראל.</li>
+          <li><b>Clal 116515786</b>. רכיב יחיד, תאונות אישיות. ציר נפרד; אינו רלוונטי לבחינה הזו.</li>
+        </ul>
+
+        <h3>השאלה</h3>
+        <p>אם פוליסת Clal 116857632 נסגרת, איזה רכיב כיסוי אבד? איזו קטגוריה לא תכוסה יותר?</p>
+
+        <table>
+          <tr><th>קטגוריה</th><th>קיימת ב-Clal 116857632</th><th>קיימת גם בהראל 503782553</th><th>אם Clal נסגרת, נחסר?</th></tr>
+          <tr><td>ייעוץ ובדיקות</td><td><span class="b-true">כן</span></td><td><span class="b-true">כן, מתחדש</span></td><td><span class="b-zero">לא</span></td></tr>
+          <tr><td>השתלות וטיפולים מיוחדים</td><td><span class="b-true">כן</span></td><td><span class="b-true">כן, מתחדש</span></td><td><span class="b-zero">לא</span></td></tr>
+          <tr><td>תרופות (x2)</td><td><span class="b-true">כן</span></td><td><span class="b-true">כן, מתחדש</span></td><td><span class="b-zero">לא</span></td></tr>
+          <tr><td>ניתוחים בחו"ל</td><td><span class="b-true">כן</span></td><td><span class="b-true">כן, מתחדש</span></td><td><span class="b-zero">לא</span></td></tr>
+          <tr><td>ניתוח אחיד</td><td><span class="b-true">כן</span></td><td><span class="b-true">כן, מתחדש</span></td><td><span class="b-zero">לא</span></td></tr>
+          <tr><td>מחלות קשות</td><td><span class="b-true">כן, 15.03 ש"ח</span></td><td><span class="b-true">כן, 18.59 ש"ח (גבוה יותר)</span></td><td><span class="b-zero">לא</span></td></tr>
+          <tr><td>טיפולים מתקדמים</td><td><span class="b-false">לא קיים</span></td><td><span class="b-true">כן, מתחדש</span></td><td><span class="b-zero">לא</span></td></tr>
+        </table>
+
+        <div class="zero-block">
+          <div class="big">0</div>
+          <div class="txt">
+            סך הכיסוי הייחודי שמוסיפה פוליסת Clal 116857632 לתמונה הכוללת של יהושע: <b>אפס</b>. אין קטגוריה אחת שבה הסרת Clal תשאיר את המבוטח חשוף. כל מה שהיא מכסה, הראל מכסה.
+          </div>
+        </div>
+
+        <h3>על שיחת הפיצוי</h3>
+        <p>הצעד הראשון, ביטול הפוליסה, הוא תפעולי וכבר מפורט במסקנה 1. הצעד השני, פתיחת שיחה על פיצוי, הוא מהלך מקובל כאשר לאחר בחינה מתברר שהוצאת ללקוח כיסוי שלא הוסיף דבר על הקיים. <b>אין כאן דרישה. אין כאן כתב תביעה.</b> שיחה עניינית שמכבדת את הצד השני, ומציינת בפשטות שהפרמיה שולמה על שכבה ריקה. השיחה היא הזדמנות לסגור את הנושא בכבוד.</p>
+        <p>גישה אפשרית: הוועדה הפנימית בסוכנות בוחנת את התיק. הסכום בבחינה הוא הפרמיה החודשית שנגבתה על Clal 116857632 לאורך כל תקופת קיומה (מ-01/06/2024 ועד למועד הביטול בפועל). הגישה היא בחינה הוגנת. הסכום עצמו, או אופי הפיצוי (החזר חלקי, זיכוי, מהלך אחר), הוא תוצאת השיחה ולא דרישה מוקדמת. הצעד הזה, אם יבוצע, סוגר תיק ומשמר יחסי עבודה.</p>
+
+        <h3>תיק הראיות</h3>
+      </div>
+
+      <div class="ev-grp">
+        <details class="ev" id="c4-e1"><summary><span class="tag">ראיה 1</span>שבעת רכיבי Clal, אחד אחד</summary>
+          <div class="ev-body">
+            <p>פירוט פר-רכיב של ה"תרומה ייחודית = 0" שבטבלה למעלה:</p>
+            <ol>
+              <li><b>ייעוץ ובדיקות.</b> שיפוי בשני הצדדים. הראל מתחדש. <span class="b-zero">תרומה ייחודית: 0</span></li>
+              <li><b>השתלות וטיפולים מיוחדים.</b> שיפוי בשני הצדדים. הראל מתחדש. <span class="b-zero">תרומה ייחודית: 0</span></li>
+              <li><b>תרופות (x2).</b> שיפוי בשני הצדדים. הראל מתחדש. <span class="b-zero">תרומה ייחודית: 0</span></li>
+              <li><b>ניתוחים בחו"ל.</b> שיפוי בשני הצדדים. הראל מתחדש. <span class="b-zero">תרומה ייחודית: 0</span></li>
+              <li><b>ניתוח אחיד.</b> שיפוי בשני הצדדים. הראל מתחדש; Clal פעיל ב-34.70 ש"ח. <span class="b-zero">תרומה ייחודית: 0</span></li>
+              <li><b>מחלות קשות.</b> תשלום חד פעמי שעקרונית מצטבר, אבל הראל משלם 18.59 ש"ח לעומת Clal 15.03 ש"ח. הוספת Clal לא מקנה כיסוי שאינו קיים בהראל. <span class="b-zero">תרומה ייחודית: 0</span></li>
+              <li><b>טיפולים מתקדמים.</b> קיים בהראל בלבד. <span class="b-zero">תרומה ייחודית: 0 (אינה ב-Clal מלכתחילה)</span></li>
+            </ol>
+            <p>סיכום: בכל אחד משבעת הרכיבים, כיסוי הראל הקיים מכסה את הקטגוריה. הוספת השכבה של Clal לא הקנתה כיסוי שלא היה קיים, ולא הגדילה תקרה במישור הרלוונטי.</p>
+          </div>
+        </details>
+      </div>
+
+      <a class="xlink" href="#c1" data-jump="c1">
+        <span class="arr">↗</span>
+        <span>הצעד התפעולי הראשון הוא הביטול. ראה <b>מסקנה 1</b>.</span>
+      </a>
+    </div>
+  </article>
+
+  <!-- ============================== CLOSING CHAPTER ============================== -->
+  <section class="closer" id="afterword">
+    <div class="closer-eyebrow">פרק סיום · רעיון לסיום</div>
+    <h2>שיתוף קצר, כי קצת התלהבתי.</h2>
+
+    <p class="closer-lead">רגע לפני שנפרדים. את המסמך הזה בניתי בערב אחד, מתוך סקרנות, עם כלים של AI, תוך כדי שלושה דברים אחרים שרצו במקביל. ההשקעה בו לא הייתה גדולה. כשסיימתי, הסתכלתי עליו ואמרתי לעצמי: <b>אם זה מה שיוצא מערב כזה, מה אפשר לבנות כשמשקיעים באמת?</b></p>
+
+    <h3>מה אתה רואה כאן</h3>
+    <p><b>זו רק טעימה.</b> הדשבורד שבעמוד הזה, וזיהוי הכפילות שראית בין Clal לבין הראל, פועלים היום, על המידע שלך. <b>זו לא הצעה. זו ההתחלה.</b></p>
+    <ul>
+      <li><b>זיהוי כפילות כיסוי בזמן אמת.</b> אוטומטי על כל לקוח בתיק, ברגע שהכפילות נוצרת, לא שנה אחרי.</li>
+      <li><b>דשבורד שמראה ללקוח בדיוק מה יש לו.</b> שקיפות שאף סוכן בשוק לא נותן בצורה הזו.</li>
+    </ul>
+    <p style="font-style:italic; color:var(--close-soft); margin-top:8px">אני עלול לטעות בהערכה שלי. אבל אני חושב שלא.</p>
+
+    <h3>הפער שנפתח</h3>
+    <p>הטכנולוגיה הזו היא נקודת פיצול. הסוכנויות שייכנסו עכשיו בונות את עצמן בקנה מידה חדש. הסוכנויות שיחכו, יאבדו לאלה שהתחילו. <b>היתרון התחרותי שייווצר כאן, אי אפשר יהיה לסגור אותו בדיעבד.</b></p>
+    <p>זו לא תחזית קיצונית. זו מציאות שכבר מתפתחת, והחלון נפתח עכשיו.</p>
+
+    <h3>דיברנו על זה</h3>
+    <p>דיברנו על זה בטלפון, ואמרת שזה מעניין אותך. אז אני שם את זה על השולחן בלי הצעה קונקרטית: <b>אני מחפש שותף בכיוון הזה</b>. אם זה עוד מעניין אותך, נשמח לשבת ולהבין יחד איך זה יכול להיראות. בלי תנאים, רק שיחה.</p>
+
+    <div class="closer-sign">
+      מי שמתחיל עכשיו, בונה חברה אמיתית. מי שמחכה, מאבד לאלה שזזו. אני אומר את זה כחבר.
+      <span class="name">מחכה לשיחה,<br>מנחם פרחי</span>
+    </div>
+  </section>
+
+  <footer>
+    הופק 3 ביוני 2026. מקורות שנקראו ומצוטטים בתזכיר: <code class="inline">data/whatsapp/meir-fresh-2026-05-29/_chat.txt</code> (175 שורות, נקראו כולן); <code class="inline">data/whatsapp/meir-media/WhatsApp Chat with מאיר ביטוח.txt</code> (היסטוריה ארוכה; ציטוטים מנובמבר 2024); <code class="inline">data/whatsapp/meir-media/IMG-20251229-WA0241.jpg</code> (תמונת המסמך BR33268744); <code class="inline">data/whatsapp/meir-media/IMG-20251228-WA0132.jpg</code> (עטיפת מייל הראל); משיכת הר הביטוח של יהושע 29/05/2026. כל ציטוט בעברית נשמר מילה במילה כפי שהופיע במקור. ת"ז של המבוטח לא הועתקה לקובץ זה לפי כלל הפרטיות של הפרויקט; היא נמצאת על תמונת המסמך בלבד. קובץ עצמאי, ניתן לשלוח במייל.
+  </footer>
+</main>
+
+<div id="gloss-tip" role="tooltip"></div>
+
+</div><!-- /#main-content -->
+
+<script>
+  // ===== gate (soft client-side, name check + 24h TTL + owner bypass) =====
+  (function(){
+    var OWNER_KEY = 'MP-9k4n7x3b9c-2026';
+    var TTL_MS = 24 * 60 * 60 * 1000;
+    var STORAGE_KEY = 'mp_meir_access_ts';
+    var VALID_NAMES = [
+      'מאיר','מאיר כהן','מאיר נסים כהן','מאיר ניסים כהן',
+      'meir','meir cohen','meir nissim cohen','meir cohen newcom'
+    ];
+    function normalize(s){ return (s||'').trim().toLowerCase().replace(/\s+/g,' '); }
+    function isValidName(s){
+      var n = normalize(s);
+      for (var i=0; i<VALID_NAMES.length; i++){ if (normalize(VALID_NAMES[i]) === n) return true; }
+      return false;
+    }
+    function el(id){ return document.getElementById(id); }
+    function showContent(){
+      el('gate-overlay').style.display='none';
+      el('gate-expired').style.display='none';
+      el('main-content').style.display='block';
+    }
+    function showGate(){
+      el('gate-overlay').style.display='flex';
+      el('gate-expired').style.display='none';
+      el('main-content').style.display='none';
+    }
+    function showExpired(){
+      el('gate-overlay').style.display='none';
+      el('gate-expired').style.display='flex';
+      el('main-content').style.display='none';
+    }
+    function init(){
+      var params = new URLSearchParams(location.search);
+      if (params.get('owner') === OWNER_KEY) { showContent(); return; }
+      var ts = null;
+      try { var v = localStorage.getItem(STORAGE_KEY); if (v) ts = parseInt(v,10); } catch(e){}
+      if (!ts) {
+        showGate();
+      } else if (Date.now() - ts < TTL_MS) {
+        showContent();
+      } else {
+        showExpired();
+      }
+      var form = el('gate-form');
+      if (form) form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var input = el('gate-input').value;
+        var err = el('gate-error');
+        if (isValidName(input)) {
+          try { localStorage.setItem(STORAGE_KEY, Date.now().toString()); } catch(e){}
+          showContent();
+        } else {
+          err.textContent = 'המסמך אינו מיועד לך.';
+          err.style.display = 'block';
+        }
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+<script>
+  // ===== conclusion cards: open/close + browser history navigation =====
+  (function(){
+    const cards = [...document.querySelectorAll('.conc')];
+    const back = document.getElementById('nav-back');
+    const fwd = document.getElementById('nav-fwd');
+    const home = document.getElementById('nav-home');
+    const crumbsState = document.getElementById('crumbs-state');
+
+    function updateCrumbs(){
+      const open = cards.filter(c => c.classList.contains('open'));
+      if (open.length === 0) {
+        crumbsState.textContent = 'שום מסקנה לא פתוחה';
+      } else if (open.length === 1) {
+        crumbsState.textContent = 'מסקנה ' + (cards.indexOf(open[0]) + 1) + ': ' + (open[0].dataset.title || '');
+      } else {
+        crumbsState.textContent = open.length + ' מסקנות פתוחות';
+      }
+    }
+
+    function openOnly(id, scroll){
+      const card = document.getElementById(id);
+      if (!card) return;
+      if (card.classList.contains('conc')) {
+        card.classList.add('open');
+        const head = card.querySelector('.conc-head');
+        if (head) head.setAttribute('aria-expanded', 'true');
+      }
+      if (scroll) {
+        setTimeout(() => card.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+      }
+      updateCrumbs();
+    }
+
+    function closeAll(){
+      cards.forEach(c => {
+        c.classList.remove('open');
+        const head = c.querySelector('.conc-head');
+        if (head) head.setAttribute('aria-expanded', 'false');
+      });
+      updateCrumbs();
+    }
+
+    cards.forEach(card => {
+      const head = card.querySelector('.conc-head');
+      if (!head) return;
+      head.addEventListener('click', () => {
+        const isOpen = card.classList.contains('open');
+        if (isOpen) {
+          card.classList.remove('open');
+          head.setAttribute('aria-expanded', 'false');
+          history.pushState({op:'close', id:card.id}, '', '#');
+        } else {
+          card.classList.add('open');
+          head.setAttribute('aria-expanded', 'true');
+          history.pushState({op:'open', id:card.id}, '', '#' + card.id);
+        }
+        updateCrumbs();
+      });
+    });
+
+    document.querySelectorAll('[data-jump]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const id = a.dataset.jump;
+        openOnly(id, true);
+        history.pushState({op:'jump', id:id}, '', '#' + id);
+      });
+    });
+
+    window.addEventListener('popstate', e => {
+      const st = e.state;
+      if (st && (st.op === 'open' || st.op === 'jump')) {
+        openOnly(st.id, true);
+      } else if (st && st.op === 'close') {
+        const card = document.getElementById(st.id);
+        if (card) {
+          card.classList.remove('open');
+          const head = card.querySelector('.conc-head');
+          if (head) head.setAttribute('aria-expanded', 'false');
+        }
+        updateCrumbs();
+      } else {
+        const hashId = location.hash.replace('#','');
+        if (hashId) openOnly(hashId, true);
+      }
+    });
+
+    back.addEventListener('click', () => history.back());
+    fwd.addEventListener('click', () => history.forward());
+    home.addEventListener('click', e => {
+      e.preventDefault();
+      closeAll();
+      window.scrollTo({top:0, behavior:'smooth'});
+      history.pushState({op:'home'}, '', '#');
+    });
+
+    if (location.hash) {
+      const id = location.hash.replace('#','');
+      openOnly(id, true);
+    }
+  })();
+
+  // ===== glossary hover tooltip =====
+  (function(){
+    const tip = document.getElementById('gloss-tip');
+    const rtl = getComputedStyle(document.documentElement).direction === 'rtl';
+    function place(el){
+      tip.textContent = el.getAttribute('data-tip') || '';
+      tip.style.direction = rtl ? 'rtl' : 'ltr';
+      tip.style.textAlign = rtl ? 'right' : 'left';
+      tip.style.display = 'block';
+      const r = el.getBoundingClientRect();
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      let left = rtl ? (r.right - tw) : r.left;
+      if (left < 8) left = 8;
+      if (left + tw > innerWidth - 8) left = innerWidth - 8 - tw;
+      let top = r.top - th - 8;
+      if (top < 8) top = r.bottom + 8;
+      tip.style.left = left + 'px';
+      tip.style.top = top + 'px';
+    }
+    const hide = () => { tip.style.display = 'none'; };
+    [...document.querySelectorAll('.gloss')].forEach(el => {
+      el.tabIndex = 0;
+      el.addEventListener('mouseenter', () => place(el));
+      el.addEventListener('mouseleave', hide);
+      el.addEventListener('focus', () => place(el));
+      el.addEventListener('blur', hide);
+      el.addEventListener('click', e => { e.preventDefault(); tip.style.display === 'block' ? hide() : place(el); });
+    });
+    addEventListener('scroll', hide, {passive:true});
+  })();
+</script>
+</body>
+</html>
