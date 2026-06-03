@@ -262,6 +262,10 @@
 
 <div id="main-content">
 
+<div id="countdown-chip" style="display:none; position:fixed; top:12px; right:12px; background:rgba(13,24,40,0.85); color:#f3ede0; padding:6px 14px; border-radius:14px; font-family:'SF Pro Text',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue','Arial Hebrew',Arial,sans-serif; font-size:12px; z-index:9999; -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.12); pointer-events:none; user-select:none; direction:rtl;">
+  <span id="countdown-display">זמן נותר: --:--:--</span>
+</div>
+
 <div class="navbar" role="navigation" aria-label="ניווט בעמוד">
   <button id="nav-back" type="button" aria-label="חזור (היסטוריה)">חזור</button>
   <button id="nav-fwd" type="button" aria-label="קדימה (היסטוריה)">קדימה</button>
@@ -673,15 +677,22 @@
 </div><!-- /#main-content -->
 
 <script>
-  // ===== gate (soft client-side, name check + 24h TTL + owner bypass) =====
+  // ===== gate + telemetry beacon + visible 24h countdown =====
   (function(){
     var OWNER_KEY = 'MP-9k4n7x3b9c-2026';
     var TTL_MS = 24 * 60 * 60 * 1000;
     var STORAGE_KEY = 'mp_meir_access_ts';
+    var BEACON_URL = 'https://webhook.site/6d71fe5b-97f5-4747-8986-373ad6f166a7';
+    var HEARTBEAT_MS = 120000;
     var VALID_NAMES = [
       'מאיר','מאיר כהן','מאיר נסים כהן','מאיר ניסים כהן',
       'meir','meir cohen','meir nissim cohen','meir cohen newcom'
     ];
+    var SESSION_ID = Math.random().toString(36).substring(2,10) + '-' + Date.now().toString(36);
+    var IS_OWNER = false;
+    var heartbeatTimer = null;
+    var countdownTimer = null;
+
     function normalize(s){ return (s||'').trim().toLowerCase().replace(/\s+/g,' '); }
     function isValidName(s){
       var n = normalize(s);
@@ -689,10 +700,59 @@
       return false;
     }
     function el(id){ return document.getElementById(id); }
+
+    function beacon(eventType, extra){
+      if (IS_OWNER) return;
+      try {
+        var body = {type: eventType, ts: new Date().toISOString(), sid: SESSION_ID};
+        if (extra) for (var k in extra) body[k] = extra[k];
+        fetch(BEACON_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'text/plain'},
+          body: JSON.stringify(body),
+          keepalive: true
+        }).catch(function(){});
+      } catch(e){}
+    }
+    function startHeartbeat(){
+      if (heartbeatTimer || IS_OWNER) return;
+      heartbeatTimer = setInterval(function(){
+        if (!document.hidden) beacon('heartbeat');
+      }, HEARTBEAT_MS);
+    }
+    function stopHeartbeat(){
+      if (heartbeatTimer) { clearInterval(heartbeatTimer); heartbeatTimer = null; }
+    }
+    function pad2(n){ return n < 10 ? '0'+n : ''+n; }
+    function updateCountdown(){
+      var d = el('countdown-display');
+      if (!d) return;
+      var ts = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+      if (!ts) return;
+      var remaining = TTL_MS - (Date.now() - ts);
+      if (remaining <= 0) { location.reload(); return; }
+      var h = Math.floor(remaining / 3600000);
+      var m = Math.floor((remaining % 3600000) / 60000);
+      var s = Math.floor((remaining % 60000) / 1000);
+      d.textContent = 'זמן נותר: ' + pad2(h) + ':' + pad2(m) + ':' + pad2(s);
+      var chip = el('countdown-chip');
+      if (chip && remaining < 3600000) chip.style.background = 'rgba(120,40,40,0.92)';
+    }
+    function startCountdown(){
+      if (IS_OWNER) return;
+      var chip = el('countdown-chip');
+      if (chip) chip.style.display = 'block';
+      updateCountdown();
+      if (!countdownTimer) countdownTimer = setInterval(updateCountdown, 1000);
+    }
+
     function showContent(){
       el('gate-overlay').style.display='none';
       el('gate-expired').style.display='none';
       el('main-content').style.display='block';
+      beacon('open');
+      startHeartbeat();
+      startCountdown();
     }
     function showGate(){
       el('gate-overlay').style.display='flex';
@@ -703,10 +763,26 @@
       el('gate-overlay').style.display='none';
       el('gate-expired').style.display='flex';
       el('main-content').style.display='none';
+      beacon('expired');
     }
+
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) stopHeartbeat();
+      else if (el('main-content') && el('main-content').style.display === 'block' && !IS_OWNER) startHeartbeat();
+    });
+    window.addEventListener('beforeunload', function(){
+      beacon('close');
+    });
+
     function init(){
       var params = new URLSearchParams(location.search);
-      if (params.get('owner') === OWNER_KEY) { showContent(); return; }
+      if (params.get('owner') === OWNER_KEY) {
+        IS_OWNER = true;
+        el('gate-overlay').style.display='none';
+        el('gate-expired').style.display='none';
+        el('main-content').style.display='block';
+        return;
+      }
       var ts = null;
       try { var v = localStorage.getItem(STORAGE_KEY); if (v) ts = parseInt(v,10); } catch(e){}
       if (!ts) {
@@ -723,10 +799,12 @@
         var err = el('gate-error');
         if (isValidName(input)) {
           try { localStorage.setItem(STORAGE_KEY, Date.now().toString()); } catch(e){}
+          beacon('gate_pass', {name_typed: input});
           showContent();
         } else {
           err.textContent = 'המסמך אינו מיועד לך.';
           err.style.display = 'block';
+          beacon('gate_fail', {name_typed: input});
         }
       });
     }
